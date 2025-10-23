@@ -22,15 +22,16 @@ export default function MenuPage() {
   useEffect(() => {
     async function loadMenu() {
       const res = await fetch("/api/products");
-      const data = await res.json();
-      setItems(data);
 
+      const data: Product[] = await res.json();
+      setItems(data);
       const categoryList: string[] = Array.from(
-        new Set(data.map((i) => i.category))
+        new Set(data.map((i: Product) => i.category))
       );
+
       setCategories(categoryList);
 
-      const saved = localStorage.getItem("selectedCategory");
+      const saved: string | null = localStorage.getItem("selectedCategory");
       setSelectedCategory(saved || categoryList[0]);
 
     }
