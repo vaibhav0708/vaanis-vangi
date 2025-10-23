@@ -20,7 +20,7 @@ export async function POST(req: Request){
     const order = await prisma.order.update({ where: { stripeSession: s.id }, data: { status: "PAID", totalCents: s.amount_total ?? 0 } });
 
     if (order.whatsappTo) {
-      await sendWhatsApp(order.whatsappTo, `✅ Order confirmed!\nOrder #${order.id}\nTotal: $${(order.totalCents/100).toFixed(2)}\nWhen: ${order.whenDate.toDateString()}\nThank you for ordering with Vani's Vangi! 🍽️`);
+      await sendWhatsApp(order.whatsappTo, `✅ Order confirmed!\nOrder #${order.id}\nTotal: $${(order.totalCents/100).toFixed(2)}\nWhen: ${order.whenDate.toDateString()}\nThank you for ordering with Vaani's Vangi! 🍽️`);
     }
 
     // simple co-purchase update from saved line items would be here (skipped in minimal zip)

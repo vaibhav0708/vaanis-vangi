@@ -28,7 +28,7 @@ export const MENU_ITEMS: MenuItem[] = [
         category: "Appetizer", name: "Khandvi Bites", prices: {
             half: 50, full:
                 100
-        }, image: "/images/foods/Khandvi-bites.jpg",
+        }, image: "/images/foods/Khandvi-Bites.jpg",
     }, {
         id: "veg-puff",
         category: "Appetizer", name: "Veg Puff", prices: {

@@ -1,36 +1,54 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { MENU_ITEMS } from "@/data/menuItems";
+import { useCartStore } from "@/store/cartStore";
+
+type Product = {
+  id: string;
+  name: string;
+  category: string;
+  priceCents: number;
+  imageUrl?: string;
+  description?: string;
+};
 
 export default function MenuPage() {
-  const categories = Array.from(new Set(MENU_ITEMS.map((i) => i.category)));
+  const [items, setItems] = useState<Product[]>([]);     // 👈 use it here
+  const [categories, setCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [selectedTray, setSelectedTray] = useState<Record<string, string>>({}); // 🟢 moved up here
+  const [selectedTray, setSelectedTray] = useState<Record<string, string>>({});
+  const addItem = useCartStore((s) => s.addItem);
 
   useEffect(() => {
-    const saved = localStorage.getItem("selectedCategory");
-    setSelectedCategory(saved || categories[0]);
+    async function loadMenu() {
+      const res = await fetch("/api/products");
+      const data = await res.json();
+      setItems(data);
+
+      const categoryList: string[] = Array.from(
+        new Set(data.map((i) => i.category))
+      );
+      setCategories(categoryList);
+
+      const saved = localStorage.getItem("selectedCategory");
+      setSelectedCategory(saved || categoryList[0]);
+
+    }
+    loadMenu();
   }, []);
 
   useEffect(() => {
-    if (selectedCategory) {
-      localStorage.setItem("selectedCategory", selectedCategory);
-    }
+    if (selectedCategory) localStorage.setItem("selectedCategory", selectedCategory);
   }, [selectedCategory]);
 
-  if (!selectedCategory) {
-    return <div className="p-6 text-center">Loading menu...</div>;
-  }
+  if (!selectedCategory) return <div className="p-6 text-center">Loading menu...</div>;
 
-  const handleSelectTray = (id: string, value: string) => {
+  const handleSelectTray = (id: string, value: string) =>
     setSelectedTray((prev) => ({ ...prev, [id]: value }));
-  };
 
-  const filteredItems = MENU_ITEMS.filter(
-    (item) => item.category === selectedCategory
-  );
+  const filteredItems = items.filter((item) => item.category === selectedCategory);
 
+  // (UI stays the same below)
   return (
     <div
       className="min-h-screen bg-fixed bg-repeat bg-center"
@@ -48,11 +66,10 @@ export default function MenuPage() {
                 <li key={cat}>
                   <button
                     onClick={() => setSelectedCategory(cat)}
-                    className={`block w-full text-left px-4 py-2 rounded-lg transition font-medium ${
-                      selectedCategory === cat
-                        ? "bg-[var(--brand-primary)] text-white"
-                        : "hover:bg-gray-200 text-gray-700"
-                    }`}
+                    className={`block w-full text-left px-4 py-2 rounded-lg transition font-medium ${selectedCategory === cat
+                      ? "bg-[var(--brand-primary)] text-white"
+                      : "hover:bg-gray-200 text-gray-700"
+                      }`}
                   >
                     {cat}
                   </button>
@@ -68,10 +85,10 @@ export default function MenuPage() {
             </h2>
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredItems.map((item) => (
+              {filteredItems.map((item: any) => (
                 <div key={item.id} className="card text-center p-4">
                   <img
-                    src={item.image}
+                    src={item.imageUrl || "/images/foods/placeholder.jpg"}
                     alt={item.name}
                     className="w-full h-48 object-cover rounded-md mb-4"
                   />
@@ -86,27 +103,28 @@ export default function MenuPage() {
                     className="border border-gray-300 rounded-md px-3 py-2 mb-4 w-full"
                   >
                     <option value="">Select Tray</option>
-                    {item.prices.half && (
-                      <option value="half">
-                        Half Tray - ${item.prices.half}
-                      </option>
-                    )}
-                    {item.prices.full && (
-                      <option value="full">
-                        Full Tray - ${item.prices.full}
-                      </option>
-                    )}
+                    <option value="half">Half Tray</option>
+                    <option value="full">Full Tray</option>
                   </select>
 
                   <button
-                    className="btn-primary w-full"
+                    className="btn-primary w-full mt-2"
                     onClick={() => {
-                      const tray = selectedTray[item.id] as "half" | "full";
-                      if (!tray) {
-                        alert("Please select a tray size first!");
-                        return;
-                      }
-                      alert(`${item.name} (${tray} tray) added to cart!`);
+                      const tray = selectedTray[item.id] as "half" | "full"; // or selectedTray[item.id] depending on your code
+                      if (!tray) return alert("Please select a tray size.");
+
+                      const price =
+                        tray === "half" ? item.priceCents / 200 : item.priceCents / 100; // adjust based on your data
+
+                      addItem({
+                        id: item.id,
+                        name: item.name,
+                        tray,
+                        price,
+                        image: item.imageUrl,
+                      });
+
+                      alert(`${item.name} (${tray}) added to cart ✅`);
                     }}
                   >
                     Add to Cart

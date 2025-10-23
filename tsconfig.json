@@ -9,14 +9,17 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-  "moduleResolution": "node",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-  "plugins": [{ "name": "next" }],
-  "types": ["next", "next-auth"],
-    "paths": { "@/*": ["./*"] }
+    "plugins": [{ "name": "next" }],
+    "types": ["next", "next-auth"],
+    "baseUrl": ".",                          // ✅ ensure baseUrl is set
+    "paths": {
+      "@/*": ["*"]                           // ✅ remove the './'
+    }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]

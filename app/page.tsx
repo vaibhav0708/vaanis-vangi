@@ -11,12 +11,12 @@ export default function Home() {
     {
       name: "Paneer Lababdar",
       description: "Creamy paneer in spiced gravy.",
-      image: "/images/foods/Paneer-Lababdar.webp",
+      image: "/images/foods/Paneer-Lababdar.jpg",
     },
     {
       name: "Gujarati Daal",
       description: "Sweet & tangy comfort food.",
-      image: "/images/foods/Gujarati-Daal.webp",
+      image: "/images/foods/Gujarati-Daal.jpg",
     },
   ];
 
@@ -34,13 +34,23 @@ export default function Home() {
             gatherings to grand celebrations — we’ve got your menu covered.
           </p>
           <div className="mt-10 flex flex-wrap gap-4 justify-center">
-            <Link href="/menu" className="btn-primary">
+            {/* Explore Menu Button (dark filled) */}
+            <Link
+              href="/menu"
+              className="bg-[var(--brand-primary)] text-white font-semibold px-8 py-3 rounded-full shadow hover:bg-[var(--brand-secondary)] hover:scale-105 active:scale-95 transition-transform duration-300"
+            >
               Explore Menu
             </Link>
-            <Link href="/tasting" className="btn-outline">
-              Book a Tasting
+
+            {/* Book a Flavor Session Button (accent highlight) */}
+            <Link
+              href="/bookings"
+              className="border-2 border-[var(--brand-accent)] text-[var(--brand-accent)] font-semibold px-8 py-3 rounded-full hover:bg-[var(--brand-accent)] hover:text-[var(--brand-primary)] hover:scale-105 active:scale-95 transition-transform duration-300 shadow-sm"
+            >
+              Book a Flavor Session
             </Link>
           </div>
+
         </div>
       </section>
 
@@ -83,10 +93,15 @@ export default function Home() {
         <p className="text-lg mb-8 text-gray-300">
           We cater weddings, birthdays, and corporate gatherings.
         </p>
-        <button className="px-8 py-3 bg-white text-[var(--brand-primary)] rounded-full font-semibold shadow-md hover:bg-[var(--brand-accent)] hover:text-black transition">
+
+        <Link
+          href="/contact"
+          className="inline-block px-8 py-3 bg-white text-[var(--brand-primary)] rounded-full font-semibold shadow-md hover:bg-[var(--brand-accent)] hover:text-black hover:scale-105 active:scale-95 transition-transform duration-300"
+        >
           Contact Us
-        </button>
+        </Link>
       </section>
+
     </main>
   );
 }

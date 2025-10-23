@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Vani's Vangi",
+  title: "VAANI'S VANGI",
   description: "Best Indian Catering in CA",
 };
 

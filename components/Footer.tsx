@@ -8,7 +8,7 @@ export default function Footer() {
           <div>
             <img
               src="/images/logo.png"
-              alt="Vani's Vangi"
+              alt="VAANI's VANGI"
               className="h-16 mb-4"
             />
             <p className="text-sm leading-relaxed">
@@ -45,9 +45,8 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold text-lg mb-4 text-[var(--brand-primary)]">Order Now</h3>
             <ul className="space-y-2 text-sm">
-              <li><a href="/full-service" className="hover:text-[var(--brand-primary)]">Full Service Catering</a></li>
-              <li><a href="/(shop)/menu" className="hover:text-[var(--brand-primary)]">Catering By Tray</a></li>
-              <li><a href="/schedule-tasting" className="hover:text-[var(--brand-primary)]">Schedule Tasting</a></li>
+              <li><a href="/menu" className="hover:text-[var(--brand-primary)]">Catering By Tray</a></li>
+              <li><a href="/bookings" className="hover:text-[var(--brand-primary)]">Book a Flavor Session</a></li>
             </ul>
           </div>
 
@@ -55,9 +54,7 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold text-lg mb-4 text-[var(--brand-primary)]">Contact Info</h3>
             <ul className="space-y-2 text-sm">
-              <li><a href="tel:+15105856519" className="hover:text-[var(--brand-primary)]">+1 (510) 585-6519</a></li>
               <li><a href="mailto:info@vanisvangi.com" className="hover:text-[var(--brand-primary)]">info@vanisvangi.com</a></li>
-              <li>5591 Hemlock Ter, Fremont CA 94538</li>
             </ul>
           </div>
         </div>
@@ -65,9 +62,9 @@ export default function Footer() {
 
       {/* Mini Dark Footer */}
       <div className="bg-[var(--brand-secondary)] text-gray-300 text-center py-3 text-sm">
-        © {new Date().getFullYear()} <span className="font-semibold text-white">Vani’s Vangi</span> — Authentic Catering.
+        © {new Date().getFullYear()} <span className="font-semibold text-white">Vaani’s Vangi</span> — Authentic Catering.
         <a
-          href="https://api.whatsapp.com/send?phone=15105856519&text=Hi%20Vani's%20Vangi!"
+          href="https://api.whatsapp.com/send?phone=15105906701&text=Hi%20Vani's%20Vangi!"
           target="_blank"
           rel="noopener noreferrer"
           className="text-[var(--brand-accent)] hover:underline ml-1"

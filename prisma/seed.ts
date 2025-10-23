@@ -1,11 +1,38 @@
 import { PrismaClient } from "@prisma/client";
+import { MENU_ITEMS } from "../data/menuItems";
+
 const prisma = new PrismaClient();
+
 async function main() {
-  const items = [
-    { name:"Undhiyu (Tray)", slug:"undhiyu-tray", category:"By Tray", priceCents: 10900, tags:["gujarati","veg"], description:"Classic winter special.", imageUrl:"" },
-    { name:"Paneer Lababdar", slug:"paneer-lababdar", category:"By Tray", priceCents: 9900, tags:["paneer","veg"], description:"Creamy rich paneer.", imageUrl:"" },
-    { name:"Gujarati Daal", slug:"gujarati-daal", category:"By Tray", priceCents: 6900, tags:["dal","veg"], description:"Sweet-tangy daal.", imageUrl:"" }
-  ];
-  for (const it of items) await prisma.product.upsert({ where:{ slug: it.slug }, update:{}, create: it });
+  console.log("🧹 Clearing old products...");
+  await prisma.product.deleteMany();
+
+  console.log("🌱 Seeding products from MENU_ITEMS...");
+  await prisma.product.createMany({
+    data: MENU_ITEMS.map((item) => ({
+      name: item.name,
+      slug: item.name.toLowerCase().replace(/\s+/g, "-"),
+      category: item.category,
+      priceCents:
+        item.prices?.full
+          ? item.prices.full * 100
+          : item.prices?.half
+          ? item.prices.half * 100
+          : 0,
+      imageUrl: item.image || null,
+      description: item.description || "Delicious and freshly prepared.",
+      available: true,
+    })),
+  });
+
+  console.log(`✅ Seeded ${MENU_ITEMS.length} menu items!`);
 }
-main().finally(()=>prisma.$disconnect());
+
+main()
+  .catch((e) => {
+    console.error("❌ Seed error:", e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });

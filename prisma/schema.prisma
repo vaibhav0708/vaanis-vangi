@@ -66,9 +66,14 @@ model Order {
   addressText   String?
   notes         String?
   stripeSession String?     @unique
-  whatsappTo    String?
   rewardUsed    Int         @default(0)
   rewardEarned  Int         @default(0)
   createdAt     DateTime    @default(now())
   user          User?       @relation(fields: [userId], references: [id])
+
+  // 👇 these must exist exactly like this
+  customerFirstName String?
+  customerLastName  String?
+  customerEmail     String?
+  customerPhone     String?
 }
