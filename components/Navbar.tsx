@@ -2,10 +2,15 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { useCartStore } from "@/store/cartStore";
+import { ShoppingCart } from "lucide-react";
 
 export default function Navbar() {
   const { data } = useSession();
   const pathname = usePathname();
+  const cartItems = useCartStore((s) => s.items);
+  const cartCount = cartItems.length;
+
 
   const navItems = [
     { name: "Home", href: "/" },
@@ -25,11 +30,10 @@ export default function Navbar() {
               <Link
                 key={item.name}
                 href={item.href}
-                className={`transition-colors duration-200 ${
-                  isActive
-                    ? "text-[var(--brand-primary)] font-semibold border-b-2 border-[var(--brand-primary)] pb-1"
-                    : "hover:text-[var(--brand-primary)]"
-                }`}
+                className={`transition-colors duration-200 ${isActive
+                  ? "text-[var(--brand-primary)] font-semibold border-b-2 border-[var(--brand-primary)] pb-1"
+                  : "hover:text-[var(--brand-primary)]"
+                  }`}
               >
                 {item.name}
               </Link>
@@ -61,9 +65,19 @@ export default function Navbar() {
               Login
             </button>
           )}
-          <Link href="/cart" aria-label="Cart" className="p-2 text-xl">
-            🛒
+          <Link href="/cart" className="relative inline-block">
+            <ShoppingCart size={24} className="text-gray-800" />
+            {cartCount > 0 && (
+              <span
+                className="absolute -top-1.5 -right-2 flex items-center justify-center 
+                 bg-[var(--brand-primary)] text-white text-[10px] font-bold 
+                 rounded-full min-w-[18px] min-h-[18px] px-[5px] border-2 border-white"
+              >
+                {cartCount}
+              </span>
+            )}
           </Link>
+
         </div>
       </div>
     </header>
