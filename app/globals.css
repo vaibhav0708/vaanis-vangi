@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* === Brand Palette: Charcoal Elegance === */
+:root {
+  --brand-bg: #ffffff;
+  --brand-primary: #1E1E1E; /* Deep charcoal */
+  --brand-primary-light: #f5f5f5; /* Soft gray for sections like footer */
+  --brand-secondary: #374151;
+  --brand-accent: #FACC15;
+  --text-main: #111111;
+}
+
+body {
+  @apply bg-[var(--brand-bg)] text-[var(--text-main)] font-sans;
+}
+
+/* === Buttons === */
+.btn-primary {
+  @apply bg-[var(--brand-primary)] text-white px-5 py-2.5 rounded-full font-medium 
+         hover:bg-[var(--brand-secondary)] transition;
+}
+
+.btn-outline {
+  @apply border border-[var(--brand-primary)] text-[var(--brand-primary)] 
+         hover:bg-[var(--brand-primary)] hover:text-white rounded-full px-5 py-2.5 transition;
+}
+
+/* === Cards === */
+.card {
+  @apply bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition;
+}
+
+/* === Links === */
+a {
+  @apply hover:text-[var(--brand-accent)] transition-colors;
+}
+
+.card img {
+  transition: transform 0.5s ease;
+}
+.card:hover img {
+  transform: scale(1.05);
+}

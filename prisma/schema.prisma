@@ -1,0 +1,74 @@
+// prisma/schema.prisma
+
+// --- DATABASE CONNECTION ---
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// --- GENERATOR (creates Prisma Client JS) ---
+generator client {
+  provider = "prisma-client-js"
+}
+
+// --- ENUMS ---
+enum Role {
+  ADMIN
+  CUSTOMER
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  FULFILLED
+  CANCELED
+}
+
+// --- MODELS ---
+model User {
+  id            String   @id @default(cuid())
+  name          String?
+  email         String?  @unique
+  passwordHash  String?
+  image         String?
+  phone         String?
+  role          Role     @default(CUSTOMER)
+  rewardsPoints Int      @default(0)
+  orders        Order[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?
+  category    String
+  priceCents  Int
+  imageUrl    String?
+  tags        String[]
+  available   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Order {
+  id            String      @id @default(cuid())
+  userId        String?
+  status        OrderStatus @default(PENDING)
+  subtotalCents Int
+  discountCents Int         @default(0)
+  taxCents      Int         @default(0)
+  totalCents    Int
+  deliveryType  String
+  whenDate      DateTime
+  addressText   String?
+  notes         String?
+  stripeSession String?     @unique
+  whatsappTo    String?
+  rewardUsed    Int         @default(0)
+  rewardEarned  Int         @default(0)
+  createdAt     DateTime    @default(now())
+  user          User?       @relation(fields: [userId], references: [id])
+}

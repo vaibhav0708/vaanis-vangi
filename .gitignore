@@ -1,0 +1,101 @@
+# ========================
+# Node / Next.js defaults
+# ========================
+node_modules/
+.npm/
+.pnpm-store/
+.cache/
+dist/
+out/
+.next/
+.vercel/
+.netlify/
+
+# ========================
+# Environment and Secrets
+# ========================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# ========================
+# Logs and Diagnostics
+# ========================
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+*.pid
+*.seed
+*.pid.lock
+
+# ========================
+# Editor / System files
+# ========================
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*.bak
+*.tmp
+*.temp
+*.orig
+*.rej
+
+# ========================
+# TypeScript and Build Artifacts
+# ========================
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+*.d.ts.map
+*.map
+coverage/
+build/
+temp/
+tmp/
+
+# ========================
+# Prisma
+# ========================
+prisma/dev.db
+prisma/dev.db-journal
+prisma/migrations/.DS_Store
+
+# ========================
+# Mac & OS files
+# ========================
+Icon?
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ========================
+# Miscellaneous
+# ========================
+*.tgz
+*.zip
+*.tar
+*.gz
+*.rar
+*.7z
+
+# ========================
+# Local tooling
+# ========================
+*.local
+.eslintcache
+stylelintcache
+.cache-loader
+coverage-final.json
+
+# ========================
+# Optional: Editor Backups
+# ========================
+*~
